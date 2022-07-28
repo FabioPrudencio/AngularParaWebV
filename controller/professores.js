@@ -25,4 +25,11 @@ professoresModulo.controller("professoresCtrl", function ($scope) {
         $scope.professores.splice($scope.professores.indexOf($scope.professor),1);
         $scope.limparCampos();
     }
+
+    $scope.hasProfessor = function() {
+        return $scope.professores.some(function (professor){
+            return $scope.professor;
+        });
+    }
+
 });

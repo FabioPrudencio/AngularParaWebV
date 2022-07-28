@@ -86,33 +86,33 @@
       <h1 align="center" class="titlecenter">Lista e Cadastro de Professores</h1>
       <br>
       <br>
-      <form>
+      <form name="professorForm">
 
         <div>
           <label class="sm-1" for="codigo" class="form-label">Código</label>
-          <input ng-model="professor.codigo" class="col-sm-1" type="text" class="form-control" id="codigo" >
+          <input ng-model="professor.codigo" ng-required="true" class="col-sm-1" type="text" class="form-control" id="codigo" >
           <label class="sm-1" for="nome" class="form-label">Nome</label>
-          <input ng-model="professor.nome" class="col-sm-5" type="text" id="nome" class="form-control" aria-describedby="Nome">
+          <input ng-model="professor.nome" ng-required="true" class="col-sm-5" type="text" id="nome" class="form-control" aria-describedby="Nome">
         </div>
 
         <br>
 
         <div>
           <label class="sm-1" for="email" class="form-label">Email</label>
-          <input ng-model="professor.email" class="col-sm-4" type="email" class="form-control" id="email" aria-describedby="Email">
+          <input ng-model="professor.email" ng-required="true" class="col-sm-4" type="email" class="form-control" id="email" aria-describedby="Email">
           <label class="sm-1" for="telefone" class="form-label">Telefone</label>
-          <input ng-model="professor.telefone" class="col-sm-3" type="text" class="form-control" id="telefone" aria-describedby="Telefone">
+          <input ng-model="professor.telefone" ng-required="true" class="col-sm-3" type="text" class="form-control" id="telefone" aria-describedby="Telefone">
         </div>
-
-        <br>
-
-        <button ng-click="limparCampos()" type="submit" class="btn btn-secondary">Novo</button>
-        <button ng-click="salvar()" type="submit" class="btn btn-secondary">Gravar</button>
-        <button ng-click="excluir()" type="submit" class="btn btn-danger">Excluir</button>
       </form>
+        <br>
+      <div>
+        <button ng-click="limparCampos()" type="submit" class="btn btn-secondary">Novo</button>
+        <button ng-click="salvar()" ng-disabled="professorForm.$invalid" type="submit" class="btn btn-secondary">Gravar</button>
+        <button ng-click="excluir()" ng-disabled="!hasProfessor(professor)" type="submit" class="btn btn-danger">Excluir</button>
+      </div>
       <br>
       <div class="mb-3">
-        <input type="text" class="form-control" id="find" placeholder="Digite o que pesquisar">
+        <input ng-model="filtro" type="text" class="form-control" id="find" placeholder="Digite o que pesquisar">
       </div>
       <br>
       <table class="table table-striped table-hover">
@@ -120,7 +120,7 @@
         <th>Nome</th>
         <th>Email</th>
         <th>Telefone</th>
-        <tr ng-repeat="professor in professores" ng-click="selecionaProfessor(professor)">
+        <tr ng-repeat="professor in professores | filter:filtro" ng-click="selecionaProfessor(professor)">
           <td>{{professor.codigo}}</td>
           <td>{{professor.nome}}</td>
           <td>{{professor.email}}</td>
