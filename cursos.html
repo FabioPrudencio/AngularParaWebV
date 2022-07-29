@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" ng-app="professoresModulo">
+<html lang="en" ng-app="cursoModulo">
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -34,9 +34,9 @@
     <!-- Custom styles for this template -->
     <link href="carousel.css" rel="stylesheet">
     <link href="geral.css" rel="stylesheet">
-    <script src="controller/professores.js"></script>
+    <script src="controller/cursos.js"></script>
   </head>
-  <body ng-controller="professoresCtrl">
+  <body ng-controller="cursoCtrl">
     <header>
       <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
         <div class="container-fluid">
@@ -83,10 +83,10 @@
     <br>
 
     <div class="container">
-      <h1 align="center" class="titlecenter">Lista e Cadastro de Professores</h1>
+      <h1 align="center" class="titlecenter">Lista e Cadastro de Cursos</h1>
       <br>
       <br>
-      <form name="professorForm">
+      <form name="cursosForm">
 
         <div>
           <label class="sm-1" for="codigo" class="form-label">Código</label>
@@ -101,8 +101,8 @@
           <label class="sm-1" for="diashorarios" class="form-label">Dias e Horários</label>
           <input ng-model="curso.diashorarios" ng-required="true" class="col-sm-4" type="text" class="form-control" id="diashorarios" aria-describedby="Dias e Horários">
           <label class="sm-1" for="professor" class="form-label">Professor</label>
-          <select ng-model="curso.professores" 
-            ng-options="professor.nome for professor in professores" class="form-control form-select col-sm-3">
+          <select ng-model="curso.professor" 
+            ng-options="professor.nome for professor in professores track by professor.codigo" class="form-control form-select col-sm-3">
             <option selected>Open this select menu</option>
           </select>          
         </div>
@@ -111,7 +111,7 @@
       <div>
         <button ng-click="limparCampos()" type="submit" class="btn btn-secondary">Novo</button>
         <button ng-click="salvar()" ng-disabled="professorForm.$invalid" type="submit" class="btn btn-secondary">Gravar</button>
-        <button ng-click="excluir()" ng-disabled="!hasProfessor(professor)" type="submit" class="btn btn-danger">Excluir</button>
+        <button ng-click="excluir()" ng-disabled="!hasCurso(curso)" type="submit" class="btn btn-danger">Excluir</button>
       </div>
       <br>
       <div class="mb-3">
@@ -123,11 +123,11 @@
         <th>Nome</th>
         <th>Dias e Horários</th>
         <th>Professor</th>
-        <tr ng-repeat="professor in professores | filter:filtro" ng-click="selecionaProfessor(professor)">
-          <td>{{professor.codigo}}</td>
-          <td>{{professor.nome}}</td>
-          <td>{{professor.email}}</td>
-          <td>{{professor.telefone}}</td>
+        <tr ng-repeat="curso in cursos | orderBy: 'codigo' | filter:filtro" ng-click="selecionaCurso(curso)">
+          <td>{{curso.codigo}}</td>
+          <td>{{curso.nome}}</td>
+          <td>{{curso.diashorarios}}</td>
+          <td>{{curso.professor.nome}}</td>
         </tr>
       </table>
     </div>    
